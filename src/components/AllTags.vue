@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="column">
-                <p>Systems</p>
+                <p>Devices</p>
                 <div class='tag' v-bind:key="tag.name" v-for="tag in categories['system'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
