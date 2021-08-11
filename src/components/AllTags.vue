@@ -4,37 +4,37 @@
         <div class="ui six column grid">
             <div class="column">
                 <p>Products</p>
-                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['product'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
+                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['product'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected, 'disabled': tag.unavailable }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
             </div>
             <div class="column">
                 <p>Devices</p>
-                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['system'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
+                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['system'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected, 'disabled': tag.unavailable }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
             </div>
             <div class="column">
                 <p>Displays</p>
-                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['display'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
+                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['display'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected, 'disabled': tag.unavailable }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
             </div>
             <div class="column">
                 <p>Components</p>
-                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['component'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
+                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['component'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected, 'disabled': tag.unavailable }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
             </div>
             <div class="column">
                 <p>Operating Systems</p>
-                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['os'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
+                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['os'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected, 'disabled': tag.unavailable }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
             </div>
             <div class="column">
                 <p>Peripherals</p>
-                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['peripheral'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
+                <div class='tag' v-bind:key="tag.name" v-for="tag in categories['peripheral'].tags" v-bind:class="{ 'selected': tag.selected, 'unselected': !tag.selected, 'disabled': tag.unavailable }" @click="toggleSelect(tag); $emit('filter-runners-by-tag', tags)">
                     <Tag v-bind:tag="tag" v-on:filter-runners-by-tag="$emit('filter-runners-by-tag', tags)" />
                 </div>
             </div>
@@ -78,8 +78,16 @@ export default {
 
     methods: {
         toggleSelect(tag) {
-            tag.selected = !tag.selected;
-        }
+            tag.selected = !tag.selected;   
+        },
+        disable(unavailableTags) {
+            this.tags.forEach(tag => {
+                tag.unavailable = false
+                if (unavailableTags.some(t => t.name === tag.name)) {
+                    tag.unavailable = true
+                }
+            })
+        },
     }
 }
 </script>
@@ -88,6 +96,10 @@ export default {
     .tag {
         cursor: pointer;
         margin-bottom: 5px;
+    }
+
+    .tag.disabled {
+        opacity: .3;
     }
 </style>
 

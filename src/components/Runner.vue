@@ -1,7 +1,7 @@
 <template>
     <div class='runner ui raised segment' v-bind:class="{ 'selected': runner.selected, 'unselected': !runner.selected }">
         <a class="ui green ribbon label">Online</a>
-        <h4>{{ runner.id }}</h4>
+        <h4>{{ runner.displayName }} <small>({{ runner.id }})</small></h4>
         <div class="ui eight column grid">
             <!-- <div class="one wide column">Specs</div> -->
             <div class="sixteen wide column specs">

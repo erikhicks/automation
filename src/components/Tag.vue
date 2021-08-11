@@ -1,6 +1,6 @@
 <template>
     <div :class="'ui label ' + (tag.selected? 'blue' : '')">
-         <i :class="this.tagIconMap[tag.category] + ' icon'"></i>
+         <i :class="(tag.icon ? tag.icon : this.tagIconMap[tag.category]) + ' icon'"></i>
         {{ tag.name }}
     </div>
 </template>
@@ -21,7 +21,8 @@ export default {
                 'component': 'microchip',
                 'peripheral': 'usb',
                 'os': 'hdd',
-                'display': 'tv'
+                'display': 'tv',
+                'setting': 'cogs'
             }
         }
     },

@@ -1,7 +1,7 @@
 <template>
     <div class='runners'>
-        <h2 class="ui dividing header">Available Runners ({{ this.selectedRunners }})</h2>
-        <div v-bind:key="runner.id" v-for="runner in runners">
+        <h2 class="ui dividing header">Available Runners ({{ this.selectedRunners.length }})</h2>
+        <div v-bind:key="runner.id" v-for="runner in selectedRunners">
             <Runner v-bind:runner="runner" />
         </div>
     </div>
@@ -17,26 +17,34 @@ export default {
         Runner
     },
 
+    created() {
+        //this.runners = runners
+    },
+
     data() {
         return {
-            runnerCount: 0
+            runnerCount: 0,
         }
-    },
-
-    mounted() {
-        this.runnerCount = this.runners.length
-    },
-
-    updated() {
-        this.runnerCount = this.runners.filter(runner => {
-            return runner.selected
-        }).length
     },
 
     props: [
         "runners",
         "selectedRunners"
     ],
+
+    watch: {
+        selectedRunners: {
+            handler: function(runners) {
+                this.updateRunners(runners)
+            }
+        }
+    },
+
+    methods: {
+        updateRunners(runners) {
+            this.selectedRunners = runners
+        }
+    },
 }
 </script>
 
