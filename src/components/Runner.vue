@@ -50,4 +50,8 @@ export default {
     .runner {
         margin-bottom: 20px !important;
     }
+
+    h4 small {
+        color: gray
+    }
 </style>
